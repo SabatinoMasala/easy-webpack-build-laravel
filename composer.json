@@ -1,0 +1,28 @@
+{
+  "name": "sabatino/easy-webpack-build",
+  "description": "",
+  "authors": [
+    {
+      "name": "Sabatino Masala",
+      "email": "Masalasabatino@gmail.com"
+    }
+  ],
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Sabatino\\EasyWebpackBuild\\EasyWebpackBuildServiceProvider"
+      ],
+      "aliases": {
+        "EasyWebpackBuild": "Sabatino\\EasyWebpackBuild\\Facade"
+      }
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Sabatino\\EasyWebpackBuild\\": "src/"
+    },
+    "files": [
+      "src/helpers.php"
+    ]
+  }
+}
