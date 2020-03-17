@@ -4,7 +4,7 @@ namespace Sabatino\EasyWebpackBuild;
 
 class EasyWebpackBuild
 {
-    public function css($name)
+    public function css($name = '/dist/css/styles.css')
     {
         $name = static::asset($name);
         if (static::isHmr()) {
