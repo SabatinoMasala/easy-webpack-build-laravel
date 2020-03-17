@@ -39,7 +39,7 @@ class EasyWebpackBuild
         throw new \Exception('File ' . $key . ' not found');
     }
 
-    public function scripts($productionScripts, $hmrScripts = []) {
+    public function scripts($productionScripts = ['/dist/js/bundle.js', '/dist/js/manifest.js', '/dist/js/vendor.js'], $hmrScripts = ['/dist/js/bundle.js']) {
         if (empty($hmrScripts)) {
             $hmrScripts = $productionScripts;
         }
