@@ -11,7 +11,9 @@ class EasyWebpackBuild
             $name = str_replace('css', 'js', $name);
             return '<script src="' . $name . '"></script>';
         }
-        return '<link rel="stylesheet" type="text/css" href="' . $name . '">';
+        $domain = config('ewb.domain', '');
+        $style = $domain . $name;
+        return '<link rel="stylesheet" type="text/css" href="' . $style . '">';
     }
 
     public function isHmr() {
@@ -45,7 +47,10 @@ class EasyWebpackBuild
         }
         $scriptsToRender = static::isHmr() ? $hmrScripts : $productionScripts;
         collect($scriptsToRender)->each(function($script) {
-            echo '<script src="' . static::asset($script) . '"></script>';
+            $domain = config('ewb.domain', '');
+            $script = static::asset($script);
+            $script = $domain . $script;
+            echo '<script src="' . $script . '"></script>';
         });
         if (static::isHmr()) {
             echo "<script>console.log('%c Running in HMR Mode', 'background: #000; color: #bada55');</script>";
