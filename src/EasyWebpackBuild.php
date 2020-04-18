@@ -4,6 +4,16 @@ namespace Sabatino\EasyWebpackBuild;
 
 class EasyWebpackBuild
 {
+
+    public $manifestFile;
+    public $hmrFile;
+
+    public function setup($manifestFile, $hmrFile)
+    {
+        $this->manifestFile = $manifestFile;
+        $this->hmrFile = $hmrFile;
+    }
+
     public function css($name = '/dist/css/styles.css')
     {
         $name = static::asset($name);
@@ -17,7 +27,7 @@ class EasyWebpackBuild
     }
 
     public function isHmr() {
-        if (file_exists(storage_path('w_hmr'))) {
+        if (file_exists(storage_path($this->hmrFile))) {
             return true;
         }
         return false;
@@ -29,11 +39,11 @@ class EasyWebpackBuild
             return 'http://localhost:8080' . $key;
         }
         static $manifest = false;
-        $manifestPath = public_path('manifest.json');
+        $manifestPath = public_path($this->manifestFile);
         if (file_exists($manifestPath)) {
             $manifest = json_decode(file_get_contents($manifestPath), true);
         } else {
-            throw new \Exception('Manifest not found');
+            throw new \Exception('Manifest not found: ' . $manifestPath);
         }
         if ($manifest) {
             return $manifest[$key];
@@ -55,6 +65,16 @@ class EasyWebpackBuild
         if (static::isHmr()) {
             echo "<script>console.log('%c Running in HMR Mode', 'background: #000; color: #bada55');</script>";
         }
+    }
+
+    public function scriptsInDir($directory = 'dist') {
+        $this->scripts([
+            '/' . $directory . '/js/bundle.js',
+            '/' . $directory . '/js/manifest.js',
+            '/' . $directory . '/js/vendor.js'
+        ], [
+            '/' . $directory . '/js/bundle.js'
+        ]);
     }
 
 }

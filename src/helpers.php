@@ -5,8 +5,10 @@ if (!function_exists('ewb')) {
      * Get EasyWebpackBuild instance
      * @return \Sabatino\EasyWebpackBuild\EasyWebpackBuild
      */
-    function ewb()
+    function ewb($manifestFile = 'manifest.json', $hmrFile = 'w_hmr')
     {
-        return app(\Sabatino\EasyWebpackBuild\EasyWebpackBuild::class);
+        $ewb = app(\Sabatino\EasyWebpackBuild\EasyWebpackBuild::class);
+        $ewb->setup($manifestFile, $hmrFile);
+        return $ewb;
     }
 }
