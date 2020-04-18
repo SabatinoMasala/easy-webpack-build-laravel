@@ -6,12 +6,14 @@ class EasyWebpackBuild
 {
 
     public $manifestFile;
+    public $devServerUrl;
     public $hmrFile;
 
-    public function setup($manifestFile, $hmrFile)
+    public function setup($manifestFile, $hmrFile, $devServerUrl)
     {
         $this->manifestFile = $manifestFile;
         $this->hmrFile = $hmrFile;
+        $this->devServerUrl = $devServerUrl;
     }
 
     public function css($name = '/dist/css/styles.css')
@@ -36,7 +38,7 @@ class EasyWebpackBuild
     public function asset($key)
     {
         if (static::isHmr()) {
-            return 'http://localhost:8080' . $key;
+            return $this->devServerUrl . $key;
         }
         static $manifest = false;
         $manifestPath = public_path($this->manifestFile);
